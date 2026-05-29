@@ -1,0 +1,19 @@
+[project]
+name = "poros"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.4.6",
+    "opencv-python>=4.13.0.92",
+    "scikit-image>=0.26.0",
+    "scipy>=1.17.1",
+]
+
+[dependency-groups]
+dev = [
+    "prek>=0.3.13",
+    "ruff>=0.15.12",
+    "ty>=0.0.34",
+]
