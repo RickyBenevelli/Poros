@@ -70,9 +70,9 @@ class AdaptiveConfig:
 
     method: AdaptiveMethod = "sauvola"
     window_size: int | None = None
-    k: float = 0.2
+    k: float = 0.1
     max_area_frac: float = 0.30
-    min_circularity: float = 0.20
+    min_circularity: float = 0.0
     split_touching: bool = True
     save_steps_dir: str | None = "adaptive_steps"
     """Optional directory for intermediate debug PNGs.
@@ -112,7 +112,7 @@ class AdaptiveThresholdDetector(BaseDetector):
 
         # morphological opening: erosion followed by dilation
         # removes small bright artifacts and smooths the edges of dark blobs
-        open_k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        open_k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
         opened = cv2.morphologyEx(raw, cv2.MORPH_OPEN, open_k)
         # Erode the slice interior mask to exclude detections near the boundary
         # then keep only candidates that are fully inside the eroded interior
