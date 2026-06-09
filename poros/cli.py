@@ -168,6 +168,7 @@ def run(argv: Sequence[str] | None = None) -> int:
     log.info("loaded %s %dx%d", args.input, bgr.shape[1], bgr.shape[0])
     ctx = build_context(
         bgr,
+        image_name=os.path.basename(args.input),
         kernel_size=args.kernel_size,
         min_area=args.min_area,
         boundary_erosion=args.boundary_erosion,

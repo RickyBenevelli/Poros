@@ -53,7 +53,7 @@ def run(argv: Sequence[str] | None = None) -> int:
         if bgr is None:
             log.warning("could not read %s", image_path)
             continue
-        ctx = build_context(bgr)
+        ctx = build_context(bgr, image_name=os.path.basename(image_path))
         results = [make_detector(d).detect(ctx) for d in available_detectors()]
         log.info("%s: %s -> %s", name, os.path.basename(image_path),
                  {r.name: len(r.holes) for r in results})

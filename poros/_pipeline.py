@@ -12,6 +12,7 @@ from .segmentation import BaseSegmenter, OtsuSliceSegmenter
 def build_context(
     bgr: BGRImage,
     *,
+    image_name: str | None = None,
     segmenter: BaseSegmenter | None = None,
     kernel_size: int | None = None,
     min_area: int | None = None,
@@ -30,4 +31,10 @@ def build_context(
         min_area=min_area,
         boundary_erosion=boundary_erosion,
     )
-    return DetectionContext(bgr=bgr, gray=gray, slice_mask=slice_mask, scale=scale)
+    return DetectionContext(
+        bgr=bgr,
+        gray=gray,
+        slice_mask=slice_mask,
+        scale=scale,
+        image_name=image_name or "",
+    )

@@ -82,12 +82,14 @@ class DetectionContext:
 
     ``gray`` is the grayscale conversion of ``bgr`` — detectors must not use
     the raw BGR image for analysis.
+    ``image_name`` is optional source metadata for diagnostics and debug output.
     """
 
     bgr: BGRImage
     gray: GrayImage
     slice_mask: Mask
     scale: ScaleParams
+    image_name: str = ""
 
 
 @dataclass
