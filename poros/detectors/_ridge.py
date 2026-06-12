@@ -93,8 +93,8 @@ class RidgeConfig:
 
     ridge_filter: RidgeFilter = "meijering"
     sigmas: tuple[float, ...] = (1.0, 1.5, 2.0, 3.0)
-    seed_percentile: float = 45.0
-    wall_cut_percentile: float = 40.0
+    seed_percentile: float = 35.0
+    wall_cut_percentile: float = 55.0
     min_distance: int | None = None
     max_area_frac: float = 0.40
     min_circularity: float = 0.0

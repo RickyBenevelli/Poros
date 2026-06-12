@@ -29,21 +29,27 @@ def render(
     slice_cnts, _ = cv2.findContours(
         slice_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
     )
-    cv2.drawContours(vis, slice_cnts, -1, _SLICE_COLOR, 2)
+    cv2.drawContours(vis, slice_cnts, -1, _SLICE_COLOR, 1)
     hole_cnts, _ = cv2.findContours(
         result.mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
     )
-    cv2.drawContours(vis, hole_cnts, -1, _HOLE_COLOR, 2)
+    cv2.drawContours(vis, hole_cnts, -1, _HOLE_COLOR, 1)
     for h in result.holes:
-        cv2.circle(vis, (round(h.cx), round(h.cy)), 2, _CENTROID_COLOR, -1)
+        cv2.circle(vis, (round(h.cx), round(h.cy)), 1, _CENTROID_COLOR, -1)
 
     if draw_banner:
         banner = f"{result.name}: {len(result.holes)} cells"
         (tw, th), _ = cv2.getTextSize(banner, cv2.FONT_HERSHEY_SIMPLEX, 1.4, 3)
         cv2.rectangle(vis, (15, 15), (35 + tw, 35 + th + 10), (0, 0, 0), -1)
         cv2.putText(
-            vis, banner, (25, 25 + th), cv2.FONT_HERSHEY_SIMPLEX, 1.4,
-            (255, 255, 255), 3, cv2.LINE_AA,
+            vis,
+            banner,
+            (25, 25 + th),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1.4,
+            (255, 255, 255),
+            3,
+            cv2.LINE_AA,
         )
     return vis
 
@@ -57,8 +63,10 @@ def compare_grid(
     """
     x0, y0, x1, y1 = _slice_bbox(slice_mask, margin=0.02)
     panels = [
-        (f"{r.name}: {len(r.holes)} cells",
-         render(bgr, slice_mask, r, draw_banner=False)[y0:y1, x0:x1])
+        (
+            f"{r.name}: {len(r.holes)} cells",
+            render(bgr, slice_mask, r, draw_banner=False)[y0:y1, x0:x1],
+        )
         for r in results
     ]
     return _tile(panels, cols=cols)
@@ -92,8 +100,14 @@ def _tile(panels: list[tuple[str, BGRImage]], cols: int) -> BGRImage:
         y0, x0 = r * cell_h, c * pw
         cv2.rectangle(grid, (x0, y0), (x0 + pw, y0 + _HEADER_H), (40, 40, 40), -1)
         cv2.putText(
-            grid, label, (x0 + 8, y0 + 24), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-            (255, 255, 255), 2, cv2.LINE_AA,
+            grid,
+            label,
+            (x0 + 8, y0 + 24),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            (255, 255, 255),
+            2,
+            cv2.LINE_AA,
         )
         grid[y0 + _HEADER_H : y0 + cell_h, x0 : x0 + pw] = cv2.resize(panel, (pw, ph))
     return grid
